@@ -9,7 +9,7 @@ import app from '../../app.js';
 
 describe('Pruebas sobre la API de chistes', () => {
 
-    describe('GET /api/jokes', () => {
+    describe('GET /api/joke', () => {
         it('Debería devolver un chiste de Chuck Norris', async () => {
             const response = await request(app).get('/api/joke?type=Chuck');
 
@@ -34,4 +34,22 @@ describe('Pruebas sobre la API de chistes', () => {
         });
     });
 
+});
+
+describe('POST /api/joke', () => {
+    it('Debería crear un nuevo chiste', async () => {
+        const newJoke = {
+            text: 'wenamichoinasama',
+            author: '',
+            rating: 5,
+            category: 'Propio'
+        };
+
+        const response = await request(app)
+            .post('/api/joke')
+            .send(newJoke);
+
+        expect(response.status).to.equal(201);
+        expect(response.body).to.have.property('id');        
+    });
 });
