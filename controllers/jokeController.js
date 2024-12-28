@@ -46,6 +46,9 @@ export const getJoke = async (req, res) => {
             case 'Propio': // Si el tipo de chiste es propio, se obtiene un chiste de la base de datos
                 try{
                     const allJokes = await Joke.find();
+                    if(allJokes.length === 0){
+                        return res.status(404).json({ message: 'Aún no hay chistes, cree uno!' });
+                    }
                     joke = allJokes[Math.floor(Math.random() * allJokes.length)].text;
                 }catch(error){
                     console.error(error);
@@ -54,7 +57,7 @@ export const getJoke = async (req, res) => {
             default:
                 return res.status(400).send('Error: Parámetro no válido.');
         }
-        res.send(joke);
+        res.status(200).send(joke);
     } catch (error) {
         res.status(500).send('Error al obtener el chiste.');
     }

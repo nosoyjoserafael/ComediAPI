@@ -23,7 +23,14 @@ describe('Pruebas sobre la API de chistes', () => {
         it('Debería devolver un chiste propio', async () => {
             const response = await request(app).get('/api/joke?type=Propio');
 
-            expect(response.status).to.equal(200);
+            if (response.status === 200) {
+                expect(response.status).to.equal(200);
+            } else if (response.status === 404) {
+                expect(response.status).to.equal(404);
+                expect(response.body.message).to.equal('Aún no hay chistes, cree uno!');
+            } else {
+                throw new Error(`Unexpected status code: ${response.status}`);
+            }
         });
     });
 
