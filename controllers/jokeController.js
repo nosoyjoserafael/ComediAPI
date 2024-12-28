@@ -62,3 +62,52 @@ export const getJoke = async (req, res) => {
         res.status(500).send('Error al obtener el chiste.');
     }
 };
+
+/**
+ * Crea un nuevo chiste.
+ * @param {Object} req - Objeto de solicitud.
+ * @param {Object} res - Objeto de respuesta.
+ * @returns {void}
+ * 
+ * @description
+ * Esta función maneja la solicitud para crear un nuevo chiste.
+ * 
+ * @example
+ * Ejemplo de uso con Postman o herramientas similares:
+ * POST http://localhost:3000/api/joke
+ * Body: {
+ *   "text": "wenamichoinasama",
+ *   "author": "",
+ *   "rating": 5,
+ *   "category": "Propio"
+ * }
+ */
+
+export const createJoke = async (req, res) => {
+    let { text, author, rating, category } = req.body;
+
+    //Verifica que los campos obligatorios no estén vacíos
+    if (!text) {
+        return res.status(400).json({ message: 'El chiste no puede estar vacío.' });
+    }    
+    if (!rating) {
+        return res.status(400).json({ message: 'La calificación no puede estar vacía' });
+    }
+    if (!category) {
+        return res.status(400).json({ message: 'La categoría no puede estar vacía' });
+    }
+
+    //Al ser un campo opcional, si el autor está vacío se le asigna un valor por defecto
+    if(!author){
+        author = 'Se perdió en el Ávila como Led';
+    }
+
+    try {
+        const newJoke = new Joke({ text, author, rating, category });
+        await newJoke.save();
+        res.status(201).json({id: newJoke.id});
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al guardar el chiste.: ', error });
+    }
+};
