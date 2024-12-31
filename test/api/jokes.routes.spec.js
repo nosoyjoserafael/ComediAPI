@@ -53,3 +53,25 @@ describe('POST /api/joke', () => {
         expect(response.body).to.have.property('id');        
     });
 });
+
+describe('DELETE /api/joke/:id', () => {
+    it('Debería eliminar un chiste', async () => {
+        
+        //Primero creamos un chiste generico propio para poder eliminarlo
+        const newJoke = {
+            text: 'wenamichoinasama',
+            author: '',
+            rating: 5,
+            category: 'Propio'
+        };
+
+        const responsePost = await request(app)
+            .post('/api/joke')
+            .send(newJoke);
+
+        //Obtenemos el id del chiste creado y lo eliminamos
+        const id = responsePost.body.id;
+        const responseDelete = await request(app).delete(`/api/joke/${id}`);
+        expect(responseDelete.status).to.equal(200);
+    });
+});
