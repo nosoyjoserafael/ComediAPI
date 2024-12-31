@@ -111,3 +111,28 @@ export const createJoke = async (req, res) => {
         res.status(500).json({ message: 'Error al guardar el chiste.: ', error });
     }
 };
+
+/**
+ * Elimina un chiste.
+ * @param {Object} req - Objeto de solicitud.
+ * @param {Object} res - Objeto de respuesta.
+ * @returns {void}
+ * 
+ * @description
+ * Esta función maneja la solicitud para eliminar un chiste.
+ * 
+ * @example
+ * Ejemplo de uso con Postman o herramientas similares:
+ * DELETE http://localhost:3000/api/joke/123
+ */
+
+export const deleteJoke = async (req, res) => {
+    const id = req.params.id;
+    try {
+        await Joke.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Chiste eliminado.' });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al eliminar el chiste.: ', error });
+    }
+}

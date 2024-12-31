@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getJoke, createJoke } from "../controllers/jokeController.js"
+import { getJoke, createJoke, deleteJoke } from "../controllers/jokeController.js"
 
 const router = Router(); // Crea un objeto router
 
@@ -7,5 +7,6 @@ const router = Router(); // Crea un objeto router
 
 router.get('/joke', getJoke);
 router.post('/joke', createJoke);
+router.delete('/joke/:id', deleteJoke);
 
 export default router;
