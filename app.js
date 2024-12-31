@@ -18,7 +18,7 @@ app.use(express.json()); // middleware para analizar solicitudes con formato JSO
 app.use(express.urlencoded({ extended: true })); // middleware para analizar solicitudes con formato application/x-www-form-urlencoded
 app.use(morgan('dev')); // middleware de registro de solicitudes HTTP
 
-app.use('/api', jokesRoutes); // middleware para enrutar las solicitudes a la api
+app.use('/comediAPI', jokesRoutes); // middleware para enrutar las solicitudes a la api
 
 app.get('/',(req,res)=>{ // ruta de bienvenida
     res.send('Hello World!');
