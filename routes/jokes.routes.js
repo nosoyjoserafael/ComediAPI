@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getJoke, createJoke, deleteJoke, updateJoke } from "../controllers/jokeController.js"
+import { getJoke, createJoke, deleteJoke, updateJoke, getJokeById } from "../controllers/jokeController.js"
 
 const router = Router(); // Crea un objeto router
 
@@ -112,5 +112,26 @@ router.delete('/joke/:id', deleteJoke);
  * description: Chiste no encontrado
  */
 router.put('/joke/:id', updateJoke);
+
+/**
+ * @swagger
+ * /joke/{id}:
+ *  get:
+ *   summary: Obtiene un chiste por su ID
+ *  tags: [Jokes]
+ * parameters:
+ *  - in: path
+ *   name: id
+ *  required: true
+ * schema:
+ *  type: string
+ * description: ID del chiste a obtener
+ * responses:
+ * 200:
+ * description: Chiste obtenido exitosamente
+ * 404:
+ * description: Chiste no encontrado
+ */
+router.get('/joke', getJokeById);
 
 export default router;
