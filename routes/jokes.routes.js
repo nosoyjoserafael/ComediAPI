@@ -77,6 +77,40 @@ router.post('/joke', createJoke);
  */
 router.delete('/joke/:id', deleteJoke);
 
+/**
+ * @swagger
+ * /joke/{id}:
+ *  put:
+ *   summary: Actualiza un chiste por su ID
+ *  tags: [Jokes]
+ * parameters:
+ *  - in: path
+ *   name: id
+ *  required: true
+ * schema:
+ *  type: string
+ * description: ID del chiste a actualizar
+ * requestBody:
+ * required: true
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * text:
+ * type: string
+ * author:
+ * type: string
+ * rating:
+ * type: number
+ * category:
+ * type: string
+ * responses:
+ * 200:
+ * description: Chiste actualizado exitosamente
+ * 404:
+ * description: Chiste no encontrado
+ */
 router.put('/joke/:id', updateJoke);
 
 export default router;

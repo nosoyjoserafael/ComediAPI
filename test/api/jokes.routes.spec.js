@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import app from '../../app.js';
+import { text } from 'express';
 
 // Prueba unitaria para la API de chistes
 // Pasos para ejecutar la prueba a través de la terminal:
