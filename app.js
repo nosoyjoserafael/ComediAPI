@@ -7,7 +7,7 @@ import swaggerSetup from './swagger.js'; // importa la configuración de Swagger
 const app = express();
 
 // Conexión a la base de datos
-mongoose.connect('mongodb://localhost:27017/jokes',)
+mongoose.connect(`${process.env.MONGODB_URI}`,)
 .then(() => {
     console.log('Conectado a la base de datos');
 }).catch((error) => {

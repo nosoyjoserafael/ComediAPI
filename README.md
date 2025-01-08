@@ -6,17 +6,19 @@ ComediAPI es una API REST para gestionar chistes. Utiliza Node.js, Express, Mong
 
 - Node.js (v14 o superior)
 - MongoDB (v4 o superior)
+- Docker Compose (v1.29 o superior)
 
 ## Instalación
 
 1. Clona el repositorio:
-
-   ```sh
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/nosoyjoserafael/comediAPI
    cd comediAPI
 
-2. Instala las dependencias:
-    npm install
+2. Construir las imágenes de Docker:
+    docker-compose build
+
+3. Inicializar los contenedores:
+    docker-compose up -d
 
 ## Ejecución
 
@@ -57,3 +59,6 @@ Abra su navegador y navegue a http://localhost:3000/api-docs para ver la documen
     Elimina un chiste por su ID.
 
     Ejemplo: curl -X DELETE "http://localhost:3000/jokes/{id}"
+
+## Pruebas
+    Para ejecutar las pruebas unitarias se debe utilizar el comando npm test en la terminal.

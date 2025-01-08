@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/comediAPI', // URL base para el entorno de desarrollo
+        url: `http://localhost:${3000}/comediAPI`, // URL base para el entorno de desarrollo
       },
     ],
   },
