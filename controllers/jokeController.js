@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Joke from "../models/joke.model.js";
+import { validateUpdate } from '../schema/update.js';
 
 // Controlador para manejar los chistes de la API
 
@@ -160,6 +161,11 @@ export const updateJoke = async (req, res) => {
     const { id } = req.params;
     const { texto, autor, puntaje, categoria } = req.body;
 
+    const result = validateUpdate({ texto, autor, puntaje, categoria })
+    if (result.error) {
+        console.error(result.error)
+    }
+
     try {
         const chisteActualizado = await Joke.findByIdAndUpdate(
             id,
@@ -175,5 +181,34 @@ export const updateJoke = async (req, res) => {
         res.json(chisteActualizado)
     } catch (error) {
         res.status(500).json({ error: 'Ocurrió un error al actualizar el chiste' });
+    }
+}
+
+/**
+ * Obtiene un chiste por su ID.
+ * @param {Object} req - Objeto de solicitud.
+ * @param {Object} res - Objeto de respuesta.
+ * @returns {void}
+ * 
+ * @description
+ * Esta función maneja la solicitud para obtener un chiste por su ID.
+ * 
+ * @example
+ * Ejemplo de uso con Postman o herramientas similares:
+ * GET http://localhost:3000/api/joke/123
+ */
+export const getJokeById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const joke = await Joke.findById(id);
+
+        if (!joke) {
+            return res.status(404).json({ error: 'Chiste no encontrado' });
+        }
+
+        res.json(joke);
+    } catch (error) {
+        res.status(500).json({ error: 'Ocurrió un error al obtener el chiste' });
     }
 }
