@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getJoke, createJoke, deleteJoke } from "../controllers/jokeController.js"
+import { getJoke, createJoke, deleteJoke, updateJoke } from "../controllers/jokeController.js"
 
 const router = Router(); // Crea un objeto router
 
@@ -76,5 +76,7 @@ router.post('/joke', createJoke);
  *         description: Chiste no encontrado
  */
 router.delete('/joke/:id', deleteJoke);
+
+router.put('/joke/:id', updateJoke);
 
 export default router;

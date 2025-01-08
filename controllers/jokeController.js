@@ -44,13 +44,13 @@ export const getJoke = async (req, res) => {
                 joke = dadResponse.data.joke;
                 break;
             case 'Propio': // Si el tipo de chiste es propio, se obtiene un chiste de la base de datos
-                try{
+                try {
                     const allJokes = await Joke.find();
-                    if(allJokes.length === 0){
+                    if (allJokes.length === 0) {
                         return res.status(404).json({ message: 'Aún no hay chistes, cree uno!' });
                     }
                     joke = allJokes[Math.floor(Math.random() * allJokes.length)].text;
-                }catch(error){
+                } catch (error) {
                     console.error(error);
                 }
                 break;
@@ -89,7 +89,7 @@ export const createJoke = async (req, res) => {
     //Verifica que los campos obligatorios no estén vacíos
     if (!text) {
         return res.status(400).json({ message: 'El chiste no puede estar vacío.' });
-    }    
+    }
     if (!rating) {
         return res.status(400).json({ message: 'La calificación no puede estar vacía' });
     }
@@ -98,14 +98,14 @@ export const createJoke = async (req, res) => {
     }
 
     //Al ser un campo opcional, si el autor está vacío se le asigna un valor por defecto
-    if(!author){
+    if (!author) {
         author = 'Se perdió en el Ávila como Led';
     }
 
     try {
         const newJoke = new Joke({ text, author, rating, category });
         await newJoke.save();
-        res.status(201).json({id: newJoke.id});
+        res.status(201).json({ id: newJoke.id });
     }
     catch (error) {
         res.status(500).json({ message: 'Error al guardar el chiste.: ', error });
@@ -134,5 +134,46 @@ export const deleteJoke = async (req, res) => {
     }
     catch (error) {
         res.status(500).json({ message: 'Error al eliminar el chiste.: ', error });
+    }
+};
+
+/**
+ * Actualiza un chiste.
+ * @param {Object} req - Objeto de solicitud.
+ * @param {Object} res - Objeto de respuesta.
+ * @returns {void}
+ * 
+ * @description
+ * Esta función maneja la solicitud para actualizar un chiste.
+ * 
+ * @example
+ * Ejemplo de uso con Postman o herramientas similares:
+ * PUT http://localhost:3000/api/joke/123
+ * Body: {
+ *   "text": "wenamichoinasama",
+ *   "author": "",
+ *   "rating": 5,
+ *   "category": "Propio"
+ * }
+ */
+export const updateJoke = async (req, res) => {
+    const { id } = req.params;
+    const { texto, autor, puntaje, categoria } = req.body;
+
+    try {
+        const chisteActualizado = await Joke.findByIdAndUpdate(
+            id,
+            { texto, autor, puntaje, categoria },
+            { new: true, runValidators: true }
+
+        );
+
+        if (!chisteActualizado) {
+            return res.status(404).json({ error: 'Chiste no encontrado' });
+        }
+
+        res.json(chisteActualizado)
+    } catch (error) {
+        res.status(500).json({ error: 'Ocurrió un error al actualizar el chiste' });
     }
 }

@@ -50,13 +50,13 @@ describe('POST /api/joke', () => {
             .send(newJoke);
 
         expect(response.status).to.equal(201);
-        expect(response.body).to.have.property('id');        
+        expect(response.body).to.have.property('id');
     });
 });
 
 describe('DELETE /api/joke/:id', () => {
     it('Debería eliminar un chiste', async () => {
-        
+
         //Primero creamos un chiste generico propio para poder eliminarlo
         const newJoke = {
             text: 'wenamichoinasama',
@@ -75,3 +75,4 @@ describe('DELETE /api/joke/:id', () => {
         expect(responseDelete.status).to.equal(200);
     });
 });
+
