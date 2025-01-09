@@ -109,7 +109,7 @@ export const createJoke = async (req, res) => {
         res.status(201).json({ id: newJoke.id });
     }
     catch (error) {
-        res.status(500).json({ message: 'Error al guardar el chiste.: ', error });
+        res.status(500).json({ message: 'Error al guardar el chiste: ', error });
     }
 };
 
@@ -159,9 +159,9 @@ export const deleteJoke = async (req, res) => {
  */
 export const updateJoke = async (req, res) => {
     const { id } = req.params;
-    const { texto, autor, puntaje, categoria } = req.body;
+    const { text, author, rating, category } = req.body;
 
-    const result = validateUpdate({ texto, autor, puntaje, categoria })
+    const result = validateUpdate({ text, author, rating, category })
     if (result.error) {
         console.error(result.error)
     }
@@ -169,7 +169,7 @@ export const updateJoke = async (req, res) => {
     try {
         const chisteActualizado = await Joke.findByIdAndUpdate(
             id,
-            { texto, autor, puntaje, categoria },
+            { text, author, rating, category },
             { new: true, runValidators: true }
 
         );

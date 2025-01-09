@@ -10,19 +10,19 @@ import { text } from 'express';
 
 describe('Pruebas sobre la API de chistes', () => {
 
-    describe('GET /api/joke', () => {
+    describe('GET /comediAPI/joke', () => {
         it('Debería devolver un chiste de Chuck Norris', async () => {
-            const response = await request(app).get('/api/joke?type=Chuck');
+            const response = await request(app).get('/comediAPI/joke?type=Chuck');
 
             expect(response.status).to.equal(200);
         });
         it('Debería devolver un chiste de papá', async () => {
-            const response = await request(app).get('/api/joke?type=Dad%20Joke');
+            const response = await request(app).get('/comediAPI/joke?type=Dad%20Joke');
 
             expect(response.status).to.equal(200);
         });
         it('Debería devolver un chiste propio', async () => {
-            const response = await request(app).get('/api/joke?type=Propio');
+            const response = await request(app).get('/comediAPI/joke?type=Propio');
 
             if (response.status === 200) {
                 expect(response.status).to.equal(200);
@@ -37,7 +37,7 @@ describe('Pruebas sobre la API de chistes', () => {
 
 });
 
-describe('POST /api/joke', () => {
+describe('POST /comediAPI/joke', () => {
     it('Debería crear un nuevo chiste', async () => {
         const newJoke = {
             text: 'wenamichoinasama',
@@ -47,7 +47,7 @@ describe('POST /api/joke', () => {
         };
 
         const response = await request(app)
-            .post('/api/joke')
+            .post('/comediAPI/joke')
             .send(newJoke);
 
         expect(response.status).to.equal(201);
@@ -55,7 +55,7 @@ describe('POST /api/joke', () => {
     });
 });
 
-describe('DELETE /api/joke/:id', () => {
+describe('DELETE /comediAPI/joke/:id', () => {
     it('Debería eliminar un chiste', async () => {
 
         //Primero creamos un chiste generico propio para poder eliminarlo
@@ -67,13 +67,65 @@ describe('DELETE /api/joke/:id', () => {
         };
 
         const responsePost = await request(app)
-            .post('/api/joke')
+            .post('/comediAPI/joke')
             .send(newJoke);
 
         //Obtenemos el id del chiste creado y lo eliminamos
         const id = responsePost.body.id;
-        const responseDelete = await request(app).delete(`/api/joke/${id}`);
+        const responseDelete = await request(app).delete(`/comediAPI/joke/${id}`);
         expect(responseDelete.status).to.equal(200);
     });
 });
 
+describe('PUT /comediAPI/joke/:id', () => {
+    it('Debería modificar un chiste', async () => {
+
+        //Primero creamos un chiste generico para luego eliminarlo
+        const newJoke = {
+            text: 'wenamichoinasama',
+            author: '',
+            rating: 5,
+            category: 'Propio'
+        };
+
+        const responsePost = await request(app)
+            .post('/comediAPI/joke')
+            .send(newJoke);
+
+        //Obtenemos el id del chiste creado y lo eliminamos
+        const id = responsePost.body.id;
+
+        //Modificamos el chiste anterior
+        const modifiedJoke = {
+            text: 'wenamichoinasama',
+            author: 'Matias',
+            rating: 5,
+            category: 'Propio'
+        };
+        const responsePut = await request(app).put(`/comediAPI/joke/${id}`).send(modifiedJoke);
+        expect(responsePut.status).to.equal(200);
+    });
+});
+
+describe('GET /comediAPI/joke/:id', () => {
+    it('Debería conseguir un chiste por su id', async () => {
+
+        //Primero creamos un chiste generico para luego buscarlo
+        const newJoke = {
+            text: 'wenamichoinasama',
+            author: '',
+            rating: 5,
+            category: 'Propio'
+        };
+
+        const responsePost = await request(app)
+            .post('/comediAPI/joke')
+            .send(newJoke);
+
+        //Obtenemos el id del chiste creado y lo eliminamos
+        const id = responsePost.body.id;
+        
+        const responseGetByID = await request(app).get(`/comediAPI/joke/${id}`)
+        expect(responseGetByID.status).to.equal(200);
+    });
+});

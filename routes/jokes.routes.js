@@ -132,6 +132,6 @@ router.put('/joke/:id', updateJoke);
  * 404:
  * description: Chiste no encontrado
  */
-router.get('/joke', getJokeById);
+router.get('/joke/:id', getJokeById);
 
 export default router;

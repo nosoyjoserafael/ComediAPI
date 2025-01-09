@@ -18,7 +18,7 @@ const jokeSchema = new Schema({
     category: {
         type: String,
         required: true,
-        enum: ["Dad Joke", "Humor negro", "Chistoso", "malo"],
+        enum: ["Dad Joke", "Humor negro", "Chistoso", "Malo"],
     }
 });
 

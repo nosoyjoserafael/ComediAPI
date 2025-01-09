@@ -2,6 +2,12 @@
 
 ComediAPI es una API REST para gestionar chistes. Utiliza Node.js, Express, MongoDB y Swagger para la documentación de la API. Esta API ha sido realizada para dar solvencia al proyecto de la asignatura Tópicos Especiales de Programación.
 
+## Autores
+
+- Matias Silveira 31020586
+- Jorge Ramírez 29529111
+- Luis Martín 
+
 ## Requisitos
 
 - Node.js (v14 o superior)
