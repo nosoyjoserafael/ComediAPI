@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getJoke, createJoke, deleteJoke, updateJoke, getJokeById, getJokeCountByCategory } from "../controllers/jokeController.js"
+import { getJoke, createJoke, deleteJoke, updateJoke, getJokeById, getJokeCountByCategory, getJokesByRating } from "../controllers/jokeController.js"
 
 const router = Router(); // Crea un objeto router
 
@@ -147,5 +147,29 @@ router.get('/joke/:id', getJokeById);
  *         description: Error al obtener el conteo de chistes
  */
 router.get('/joke/count', getJokeCountByCategory);
+
+/**
+ * @swagger
+ * /joke/rating:
+ *   get:
+ *     summary: Obtiene todos los chistes por puntaje
+ *     tags: [Jokes]
+ *     parameters:
+ *       - in: query
+ *         name: rating
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: Puntaje de los chistes a obtener.
+ *     responses:
+ *       200:
+ *         description: Chistes obtenidos exitosamente
+ *       404:
+ *         description: No hay chistes con este puntaje
+ *       500:
+ *         description: Error al obtener los chistes
+ */
+router.get('/joke/rating', getJokesByRating);
+
 
 export default router;

@@ -212,8 +212,6 @@ export const getJokeById = async (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al obtener el chiste' });
     }
 }
-
-
 /**
  * Obtiene el recuento de chistes por categoría.
  * 
@@ -239,3 +237,30 @@ export const getJokeCountByCategory = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener la cantidad de chistes', error });
     }
 };
+
+/**
+ * Obtiene chistes filtrados por su puntaje.
+ * 
+ * @param {Object} req - Objeto de solicitud, que contiene la consulta con el puntaje.
+ * @param {Object} res - Objeto de respuesta, utilizado para enviar la respuesta al cliente.
+ * 
+ * @returns {Promise<void>} - Retorna una respuesta JSON con los chistes que coinciden con el puntaje especificado,
+ *                            o un mensaje de error en caso de que no existan chistes o ocurra un error.
+ * 
+ * @throws {Error} - En caso de ocurrir un error en la operación, se envía un mensaje de error y el código de estado 500.
+ */
+export const getJokesByRating = async (req, res) => {
+    try {
+        const { rating } = req.query;
+        const jokes = await Joke.find({ rating });
+
+        if (jokes.length === 0) {
+            return res.status(404).json({ message: 'No hay chistes con este puntaje' });
+        }
+
+        res.status(200).json(jokes);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener los chistes', error });
+    }
+};
+
