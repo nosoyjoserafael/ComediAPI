@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getJoke, createJoke, deleteJoke, updateJoke, getJokeById } from "../controllers/jokeController.js"
+import { getJoke, createJoke, deleteJoke, updateJoke, getJokeById, getJokeCountByCategory } from "../controllers/jokeController.js"
 
 const router = Router(); // Crea un objeto router
 
