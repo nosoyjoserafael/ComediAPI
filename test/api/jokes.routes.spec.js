@@ -129,3 +129,19 @@ describe('GET /comediAPI/joke/:id', () => {
         expect(responseGetByID.status).to.equal(200);
     });
 });
+
+describe('GET /comediAPI/joke/rating', () => {
+    it('Debería devolver todos los chistes por puntaje', async () => {
+        const response = await request(app).get('/comediAPI/joke/rating?rating=5');
+
+        if (response.status === 200) {
+            expect(response.status).to.equal(200);
+            expect(response.body).to.be.an('array');
+        } else if (response.status === 404) {
+            expect(response.status).to.equal(404);
+            expect(response.body.message).to.equal('No hay chistes con este puntaje');
+        } else {
+            throw new Error(`Unexpected status code: ${response.status}`);
+        }
+    });
+});
