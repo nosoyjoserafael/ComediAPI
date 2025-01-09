@@ -134,4 +134,7 @@ router.put('/joke/:id', updateJoke);
  */
 router.get('/joke/:id', getJokeById);
 
+
+router.get('/joke/count', getJokeCountByCategory);
+
 export default router;
