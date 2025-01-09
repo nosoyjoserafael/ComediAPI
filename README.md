@@ -34,32 +34,82 @@ ComediAPI es una API REST para gestionar chistes. Utiliza Node.js, Express, Mong
 
 Abra su navegador y navegue a http://localhost:3000/api-docs para ver la documentación generada por Swagger.
 
-## Rutas de la API
+## Rutas API
 
-1. Obtener un chiste
-### GET /joke?type={type}
-    Obtiene un chiste basado en el tipo especificado en el parámetro de consulta {type}.
+### Obtener un chiste
 
-    Parámetros:
-        type: Tipo de chiste a obtener. 
-        Valores permitidos: Chuck, Dad Joke, Propio.
+```yaml
+GET /joke?type={type}
+```
 
-    Ejemplo: curl -X GET "http://localhost:3000/joke?type=Chuck"
+Obtiene un chiste basado en el tipo especificado.
 
-2. Crear un chiste
-### POST /joke
-    Crea un nuevo chiste con el contenido proporcionado en el cuerpo de la solicitud.
+- **Parámetros de consulta**:
+  - `type` (string, requerido): Tipo de chiste a obtener. Valores posibles: `Chuck`, `Dad Joke`, `Propio`.
+- **Respuestas**:
+  - `200`: Chiste obtenido exitosamente.
+  - `400`: Parámetro no válido.
 
-    Ejemplo:
-    curl -X POST "http://localhost:3000/jokes" -H "Content-Type: application/json" -d '{
-    "text": "Mi novia, hablando de astronomía, me preguntó cómo mueren las estrellas. "Normalmente por sobredosis", le dije.",
-    "author": "Pepito Grillo",
-    "rating": 5,
-    "category": "Humor negro"
-    }'
+### Crear un nuevo chiste
 
-3. Eliminar un chiste
-    ### DELETE /joke/:id
-    Elimina un chiste por su ID.
+```yaml
+POST /joke
+```
 
-    Ejemplo: curl -X DELETE "http://localhost:3000/jokes/{id}"
+Crea un nuevo chiste.
+
+- **Cuerpo de la solicitud**:
+  - `text` (string): Texto del chiste.
+  - `author` (string): Autor del chiste.
+  - `rating` (number): Puntaje del chiste.
+  - `category` (string): Categoría del chiste.
+- **Respuestas**:
+  - `201`: Chiste creado exitosamente.
+  - `400`: Error al crear el chiste.
+
+### Eliminar un chiste por su ID
+
+```yaml
+DELETE /joke/{id}
+```
+
+Elimina un chiste basado en su ID.
+
+- **Parámetros de ruta**:
+  - `id` (string, requerido): ID del chiste a eliminar.
+- **Respuestas**:
+  - `200`: Chiste eliminado exitosamente.
+  - `404`: Chiste no encontrado.
+
+### Actualizar un chiste por su ID
+
+```yaml
+PUT /joke/{id}
+```
+
+Actualiza un chiste basado en su ID.
+
+- **Parámetros de ruta**:
+  - `id` (string, requerido): ID del chiste a actualizar.
+- **Cuerpo de la solicitud**:
+  - `text` (string): Texto del chiste.
+  - `author` (string): Autor del chiste.
+  - `rating` (number): Puntaje del chiste.
+  - `category` (string): Categoría del chiste.
+- **Respuestas**:
+  - `200`: Chiste actualizado exitosamente.
+  - `404`: Chiste no encontrado.
+
+### Obtener un chiste por su ID
+
+```yaml
+GET /joke/{id}
+```
+
+Obtiene un chiste basado en su ID.
+
+- **Parámetros de ruta**:
+  - `id` (string, requerido): ID del chiste a obtener.
+- **Respuestas**:
+  - `200`: Chiste obtenido exitosamente.
+  - `404`: Chiste no encontrado.
